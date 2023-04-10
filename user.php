@@ -15,7 +15,6 @@ if(isset($_POST['submit'])){
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
     $user_password_reset = $_POST['user_password_reset'];
-
     $md5_user_password = md5($user_password);
 
     if(empty($user_first_name)){
@@ -39,10 +38,10 @@ if(isset($_POST['submit'])){
 		if($user_password === $user_password_reset){
 
             $sql = "INSERT INTO users(user_first_name,user_last_name,user_email,user_password) 
-			VALUE('$user_first_name','$user_last_name','$user_email','$user_password')";
+			VALUE('$user_first_name','$user_last_name','$user_email','$md5_user_password')";
             
-			if($conn->query($sql)){
-              echo "Information Added Successfully";
+			if($conn->query($sql) == TRUE){
+        header('location:login.php?usercreated');
 			}else{
 			  echo "password not match";
 			}
