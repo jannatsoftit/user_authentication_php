@@ -30,11 +30,11 @@ if(isset($_POST['login'])){
         $query = $conn->query($sql);
         if($query->num_rows > 0){
 
-            $_SESSION['lognin'] = 'login successfull';
+            $_SESSION['lognin'] = 'login successful';
 
             header('location:dashboard.php');
         }else{
-            echo "Login Unsuccessfull";
+            echo "Login Unsuccessful";
         }
 
     }
