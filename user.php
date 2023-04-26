@@ -62,8 +62,8 @@ if(isset($_POST['submit'])){
        
       if($user_password === $user_password_reset){
   
-              $sql = "INSERT INTO users(user_first_name,user_last_name,user_email,user_password, user_image) 
-        VALUE('$user_first_name','$user_last_name','$user_email','$md5_user_password', '$image')";
+              $sql = "INSERT INTO users(user_first_name, user_last_name, user_name, user_email, user_password, user_image) 
+        VALUE('$user_first_name','$user_last_name','$user_name', '$user_email','$md5_user_password', '$image')";
               
         if($conn->query($sql) == TRUE){
           move_uploaded_file($image_tmp_name, $image_folder);
