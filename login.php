@@ -1,4 +1,5 @@
  
+ 
  <?php
  
 session_start();
@@ -29,18 +30,16 @@ if(isset($_POST['login'])){
 
         $query = $conn->query($sql);
 
-        if($query->num_rows > 0){
+        if(mysqli_num_rows($query) === 1){
             $get_data = mysqli_fetch_assoc($query);
 
             if($get_data['user_email'] === $user_email && $get_data['user_password'] === $md5_user_password){
-                
-            $_SESSION['user_name'] = $get_data['user_first_name']; 
+                 
             $_SESSION['user_email'] = $get_data['user_email'];
             $_SESSION['user_password'] = $get_data['user_password'];
             $_SESSION['user_id'] = $get_data['user_id'];
-
-
-            $_SESSION['lognin'] = "Login Successful";
+            $_SESSION['user_name'] = $get_data['user_name'];
+            
             header('location:dashboard.php');
 
             }
