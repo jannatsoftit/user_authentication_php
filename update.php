@@ -10,6 +10,7 @@ if (!$conn) {
 
 $user_id = $_SESSION['user_id'];
 
+
 $sql = "SELECT * FROM users WHERE user_id = '$user_id'";
 $select = mysqli_query($conn, $sql) or die('query failed');
 if($select->num_rows > 0){
@@ -37,10 +38,10 @@ if (isset($_POST['update_profile'])) {
   if (empty($updateName)) {
     $errorMessages[] = 'Name is required.';
   }
-  elseif ($updateName == $fetch['user_first_name']) {
+  elseif ($updateName == $fetch['user_name']) {
   }
   else {
-    $fields['user_first_name'] = $updateName;
+    $fields['user_name'] = $updateName;
   }
 
   if (empty($updateEmail)) {
@@ -80,7 +81,7 @@ if (isset($_POST['update_profile'])) {
     $errorMessages[] = 'Image is too large.';
   }
   else {
-    $updateImagePath = 'uploaded_img/' . $updateImage['name'];
+    $updateImagePath = $updateImage['name'];
     move_uploaded_file($updateImage['tmp_name'], $updateImagePath);
     $fields['user_image'] = $updateImagePath;
   }
@@ -101,6 +102,8 @@ if (isset($_POST['update_profile'])) {
       $successMessage = 'Updated successfully.';
     }
   }
+
+
 }
 
 $selectSql = "SELECT * FROM users WHERE user_id = '$user_id'";
@@ -108,6 +111,7 @@ $selectResult = mysqli_query($conn, $selectSql);
 if (mysqli_num_rows($selectResult) > 0) {
   $fetch = mysqli_fetch_assoc($selectResult);
 }
+
 
 ?>
 
@@ -143,7 +147,7 @@ if (mysqli_num_rows($selectResult) > 0) {
                   if ($fetch['user_image'] == '') {
                     echo '<img src="image/default.png" />';
                   }else{
-                    echo '<img src="' . $fetch['user_image'] . '" />';
+                    echo '<img src="uploaded_img/'.$fetch['user_image'].'">'; 
                   }
 
                   if (isset($errorMessages)) {
@@ -162,7 +166,7 @@ if (mysqli_num_rows($selectResult) > 0) {
 
                 <div class="mt-2">
                         <lable>User Name: </lable>
-                        <input class="form-control" type="text" name="update_name" value="<?php echo $fetch['user_first_name'];?>" />
+                        <input class="form-control" type="text" name="update_name" value="<?php echo $fetch['user_name'];?>" />
 
                     </div>
 
